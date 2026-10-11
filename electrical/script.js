@@ -1,0 +1,9 @@
+const toggle=document.querySelector('.menu-toggle'),nav=document.querySelector('nav');
+toggle.addEventListener('click',()=>{const open=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',open)});
+document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+document.querySelectorAll('.filters button').forEach(button=>button.addEventListener('click',()=>{document.querySelector('.filters .active').classList.remove('active');button.classList.add('active');document.querySelectorAll('.project-card').forEach(card=>{card.style.display=button.dataset.filter==='all'||card.dataset.cat===button.dataset.filter?'block':'none'})}));
+document.querySelectorAll('[data-enquire]').forEach(button=>button.addEventListener('click',()=>{const form=document.querySelector('#service-form');form.querySelector('textarea').value=`Hello, I would like more information about ${button.dataset.enquire}.`;location.hash='request';form.querySelector('input[name=name]').focus()}));
+function demoForm(form,message){form.addEventListener('submit',e=>{e.preventDefault();if(!form.checkValidity()){form.reportValidity();return}const success=form.querySelector('.success');success.textContent=message;success.classList.add('show');form.reset()})}
+demoForm(document.querySelector('#service-form'),'Thank you. Your request has been received. We will contact you shortly to discuss your electrical needs.');
+demoForm(document.querySelector('#contact-form'),'Thanks for getting in touch. We will respond shortly.');
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity=1;e.target.style.transform='none';observer.unobserve(e.target)}}),{threshold:.08});document.querySelectorAll('.reveal').forEach(el=>{el.style.opacity=0;el.style.transform='translateY(14px)';el.style.transition='opacity .5s ease, transform .5s ease';observer.observe(el)});
